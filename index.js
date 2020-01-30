@@ -155,6 +155,16 @@ class Instructor extends Lambdasian {
   grade(student, subject){
     return `${student.name} receives a perfect score on ${subject}`;
   }
+  adjustGrade(student) {
+    let points = Math.round(Math.random() * 100);
+    if (student.grade >= 100) {
+        student.grade -= points;
+        return `${points} points are subtracted from ${student.name}'s grade.  ${student.name}'s current grade is ${student.grade}`;
+    } else {
+        student.grade += points;
+        return `${points} points are added to ${student.name}'s grade.  ${student.name}'s current grade is ${student.grade}`;
+    }
+  }
 };
 
 const newInst = new Instructor({
@@ -185,12 +195,23 @@ const newInst = new Instructor({
         + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
+
+/*
+  STRETCH PROBLEM (no tests!)
+    - Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
+    - Now that our students have a grade build out a method on the Instructor (this will be used by _BOTH_ instructors and PM's) that will randomly add or subtract points to a student's grade. _Math.random_ will help.
+    - Add a graduate method to a student.
+      + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
+      + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
+*/
+
 class Student extends Lambdasian {
   constructor(attr){
     super(attr),
       this.previousBackground = attr.previousBackground;
       this.className = attr.className;
       this.favSubjects = attr.favSubjects;
+      this.grade = attr.grade;
 };
 
   listSubjects() {
@@ -202,6 +223,15 @@ class Student extends Lambdasian {
   sprintChallenge(subject) {
     return `${this.name} has begun spring challenge on ${subject}`;
   }
+  graduate() {
+    if (this.grade >= 70) {
+        return `${this.name} has graduated with a final grade of ${this.grade}!`;
+    } else {
+        let diff = 70 - this.grade;
+        this.grade += diff;
+        return `After more grading, ${diff} points were earned and ${this.name} has graduated with a final grade of ${this.grade}!`;
+    }
+}
 }
 
 const newStudent = new Student({
@@ -264,6 +294,8 @@ const newPM = new ProjectManager({
       + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
       + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
 */
+
+
 
 ///////// END OF CHALLENGE /////////
 ///////// END OF CHALLENGE /////////
